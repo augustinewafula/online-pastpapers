@@ -103,7 +103,7 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="question" class="{{ $errors->has('question') ? ' text-danger' : '' }}">Question file</label>
-                                <input type="file" name="question" class="form-control{{ $errors->has('question') ? ' is-invalid' : '' }}" id="question" aria-describedby="questionHelp" required>
+                                <input type="file" name="question" class="form-control{{ $errors->has('question') ? ' is-invalid' : '' }}" accept=".pdf,.docx" id="question" aria-describedby="questionHelp" required>
                                 @if ($errors->has('question'))
                                     <span class="text-danger">
                                         <strong>{{ $errors->first('question') }}</strong>

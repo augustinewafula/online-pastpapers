@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Pastpaper;
 use Illuminate\Http\Request;
+use NumberFormatter;
+use App\Jobs\ExtractTextFromFile;
+use App\FileToText;
+use Illuminate\Support\Facades\Log;
 
 class PastpaperController extends Controller
 {
@@ -42,10 +46,9 @@ class PastpaperController extends Controller
             'programme'=>'required|string',
             'unit_name'=>'required|string',
             'unit_code'=>'required|string',
-            'question'=>'required|mimes:pdf|max:150000',
-            'answer'=>'required_if:answer_checkbox,on|mimes:pdf|max:150000',
-
-        ]); 
+            'question'=>'required|mimes:pdf,docx|max:150000',
+            'answer'=>'required_if:answer_checkbox,on|mimes:pdf,docx|max:150000'
+        ]);
         
         $pastpaper = new Pastpaper();
         $pastpaper->department = $request->department;
@@ -57,21 +60,28 @@ class PastpaperController extends Controller
             $pastpaper->answer = $this->uploadFile($request->answer,'answer',$request->unit_name.'-'.$request->unit_code);
         }
         $pastpaper->save();
+
+        $pastpaper_name = explode(".", $pastpaper->question, 2)[0];
+        $pastpaper_extension = substr($pastpaper->question, strpos($pastpaper->question, ".") + 1);
+
+        ExtractTextFromFile::dispatch($pastpaper_name,$pastpaper_extension,$pastpaper->id)
+                    ->delay(now()->addSeconds(1)); 
+
         $request->session()->flash('status', 'Pastpaper added successfully');
         return redirect($this->redirectPath);
 
     }
 
     public function uploadFile($file,$type,$unit_name){
-        // Handle newsletter upload
+        // Handle file upload
         $filenameWithExt = $file->getClientOriginalName();
         //get just file name
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         //get just ext
         $extension = $file->getClientOriginalExtension();
         //file name to store
-        $fileNameToStore = str_replace(' ', '-', $unit_name).'-.'.$type.$extension;
-        //upload newsletter
+        $fileNameToStore = str_replace(' ', '-', $unit_name).'-'.$type.'.'.$extension;
+        //upload file
         $path = $file->storeAs('storage/pastpapers',$fileNameToStore);
         return $fileNameToStore;
 
