@@ -49,7 +49,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
 
     Route::group(['middleware' => ['admin']], function () {
-        Route::get('/home', 'HomeController@admin_index')->name('admin_home');
+        Route::get('home', 'HomeController@admin_index')->name('admin.home');
         Route::resource('pastpapers', 'PastpaperController');
+        Route::resource('departments', 'DepartmentController');
     });
 });

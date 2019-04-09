@@ -20,7 +20,7 @@ class PastpaperController extends Controller
     public function index()
     {
         $pastpapers = Pastpaper::all();
-        return view('admin.pastpapers')->with('pastpapers',$pastpapers);;
+        return view('admin.pastpapers')->with('pastpapers',$pastpapers);
     }
 
     /**
