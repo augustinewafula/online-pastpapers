@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Unit;
+use App\Department;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
+    protected $redirectPath = 'admin/units';
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +16,8 @@ class UnitController extends Controller
      */
     public function index()
     {
-        //
+        $units = Unit::all();
+        return view('admin.units')->with('units',$units);
     }
 
     /**
@@ -24,7 +27,8 @@ class UnitController extends Controller
      */
     public function create()
     {
-        //
+        $departments = Department::all();
+        return view('admin.add_unit')->with('departments',$departments);
     }
 
     /**
@@ -35,7 +39,23 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required|string|unique:units|max:191',
+            'code'=>'required|string|unique:units|max:191',
+            'department'=>'required|string|max:191'
+        ]);
+
+        $department = Department::where('slug',$request->department)->first();
+
+        $unit = new Unit();
+        $unit->department_id = $department->id;
+        $unit->name = $request->name;
+        $unit->code = $request->code;
+        $unit->save();
+
+        $request->session()->flash('status', 'Unit added successfully');
+        return redirect($this->redirectPath);        
+
     }
 
     /**
@@ -55,9 +75,15 @@ class UnitController extends Controller
      * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function edit(Unit $unit)
+    public function edit($slug)
     {
-        //
+        $departments = Department::all();
+        $unit = Unit::where('slug',$slug)->first();
+        $data=array(
+            'unit'=>$unit,
+            'departments'=>$departments
+         );
+        return view('admin.edit_unit')->with($data);
     }
 
     /**
@@ -67,9 +93,24 @@ class UnitController extends Controller
      * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Unit $unit)
+    public function update(Request $request, $slug)
     {
-        //
+        $this->validate($request, [
+            'name'=>'required|string|max:191',
+            'code'=>'required|string|max:191',
+            'department'=>'required|string|max:191'
+        ]);
+
+        $department = Department::where('slug',$request->department)->first();
+
+        $unit = Unit::where('slug',$slug)->first();
+        $unit->department_id = $department->id;
+        $unit->name = $request->name;
+        $unit->code = $request->code;
+        $unit->save();
+
+        $request->session()->flash('status', 'Unit updated successfully');
+        return redirect($this->redirectPath);     
     }
 
     /**
@@ -78,8 +119,12 @@ class UnitController extends Controller
      * @param  \App\Unit  $unit
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Unit $unit)
+    public function destroy(Request $request, $slug)
     {
-        //
+        $unit = Unit::where('slug',$slug)->first();
+        $unit->delete();
+
+        $request->session()->flash('status', 'Unit deleted successfully');
+        return redirect($this->redirectPath);
     }
 }

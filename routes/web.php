@@ -52,5 +52,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('home', 'HomeController@admin_index')->name('admin.home');
         Route::resource('pastpapers', 'PastpaperController');
         Route::resource('departments', 'DepartmentController');
+        Route::resource('units', 'UnitController');
     });
 });
