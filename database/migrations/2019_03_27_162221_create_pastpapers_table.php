@@ -15,10 +15,9 @@ class CreatePastpapersTable extends Migration
     {
         Schema::create('pastpapers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('department');
+            $table->bigInteger('unit_id')->unsigned();
+            $table->foreign('unit_id')->references('id')->on('units');
             $table->string('programme');
-            $table->string('unit_name');
-            $table->string('unit_code');
             $table->string('question');
             $table->string('answer')->nullable();
             $table->timestamps();

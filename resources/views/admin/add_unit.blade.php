@@ -4,10 +4,6 @@
     <title>Units - Online Pastpapers</title>
 @endsection
 
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
-@endsection
-
 @section('content')
 @include('admin.includes.header')
 @include('admin.includes.side_menu')

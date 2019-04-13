@@ -41,8 +41,8 @@
                     <tbody>
                         @foreach ($pastpapers as $pastpaper)
                         <tr class="item">
-                            <td>{{ $pastpaper->unit_name }}</td> 
-                            <td>{{ $pastpaper->unit_code }}</td>
+                            <td>{{ $pastpaper->unit->name }}</td> 
+                            <td>{{ $pastpaper->unit->code }}</td>
                             <td>{{ $pastpaper->programme }}</td>
                             <td></td>
                             {{-- <td>

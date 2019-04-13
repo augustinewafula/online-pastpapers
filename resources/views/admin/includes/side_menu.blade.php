@@ -3,8 +3,8 @@
   <aside class="app-sidebar">
     <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{{ asset('img/avatar.png') }}" width="48" alt="User Image">
       <div>
-        {{-- <p class="app-sidebar__user-name">{{Auth()->user()->name}}</p>
-        <p class="app-sidebar__user-designation">{{Auth()->user()->email}}</p> --}}
+        <p class="app-sidebar__user-name">{{Auth('admin')->user()->name}}</p>
+        <p class="app-sidebar__user-designation">{{Auth('admin')->user()->email}}</p>
       </div>
     </div>
     <ul class="app-menu">

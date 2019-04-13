@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Pastpaper;
+use App\Unit;
 use Illuminate\Http\Request;
-use NumberFormatter;
 use App\Jobs\ExtractTextFromFile;
-use App\FileToText;
-use Illuminate\Support\Facades\Log;
 
 class PastpaperController extends Controller
 {
@@ -30,7 +28,8 @@ class PastpaperController extends Controller
      */
     public function create()
     {
-        return view('admin.add_pastpaper');
+        $units = Unit::all();
+        return view('admin.add_pastpaper')->with('units',$units);
     }
 
     /**
@@ -42,22 +41,22 @@ class PastpaperController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'department'=>'required|string',
             'programme'=>'required|string',
-            'unit_name'=>'required|string',
-            'unit_code'=>'required|string',
+            'unit'=>'required|string',
+            'from'=>'required|string',
+            'to'=>'required|string',
             'question'=>'required|mimes:pdf,docx|max:150000',
             'answer'=>'required_if:answer_checkbox,on|mimes:pdf,docx|max:150000'
         ]);
+
+        $unit = Unit::where('slug',$request->unit)->first();
         
         $pastpaper = new Pastpaper();
-        $pastpaper->department = $request->department;
         $pastpaper->programme = $request->programme;
-        $pastpaper->unit_name = $request->unit_name;
-        $pastpaper->unit_code = $request->unit_code;
-        $pastpaper->question = $this->uploadFile($request->question,'question',$request->unit_name.'-'.$request->unit_code);
+        $pastpaper->unit_id = $unit->id;
+        $pastpaper->question = $this->uploadFile($request->question,'question',$unit->name.'-'.$unit->code);
         if ($request->answer_checkbox) {
-            $pastpaper->answer = $this->uploadFile($request->answer,'answer',$request->unit_name.'-'.$request->unit_code);
+            $pastpaper->answer = $this->uploadFile($request->answer,'answer',$unit->name.'-'.$unit->code);
         }
         $pastpaper->save();
 

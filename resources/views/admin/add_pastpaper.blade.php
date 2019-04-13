@@ -25,80 +25,44 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-5">
-                            <div class="form-group{{ $errors->has('department') ? ' has-error' : '' }}">
-                                <label for="department" class="{{ $errors->has('department') ? ' text-danger' : '' }}">Department</label>
-                                <select class="form-control{{ $errors->has('programme') ? ' is-invalid' : '' }}" id="department" name="department" required>
-                                        <option value="">-- Select Department where the pastpaper belongs --</option>
-                                        <option value="Architecture & Civil Engineering">Architecture &amp; Civil Engineering</option>
-                                        <option value="Biology">Biology</option>
-                                        <option value="Chemical Engineering">Chemical Engineering</option>
-                                        <option value="Chemistry">Chemistry</option>
-                                        <option value="Computer Science">Computer Science</option>
-                                        <option value="Economics">Economics</option>
-                                        <option value="Education">Education</option>
-                                        <option value="Electrical & Electronic Engineering">Electrical &amp; Electronic Engineering</option>
-                                        <option value="Foreign Languages Centre">Foreign Languages Centre</option>
-                                        <option value="Health">Health</option>
-                                        <option value="Mathematical Science">Mathematical Science</option>
-                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
-                                        <option value="MN">Mechanical Engineering</option>
-                                        <option value="Natural Sciences">Natural Sciences</option>
-                                        <option value="Pharmacy & Pharmacology">Pharmacy &amp; Pharmacology</option>
-                                        <option value="Physics">Physics</option>
-                                        <option value="Politics, Languages &amp; International Studies">Politics, Languages &amp; International Studies</option>
-                                        <option value="Psychology">Psychology</option>
-                                        <option value="Social & Policy Sciences">Social &amp; Policy Sciences</option>            
+                            <div class="form-group">
+                                <label for="unit" class="{{ $errors->has('unit') ? ' text-danger' : '' }}">Unit</label>
+                                <select class="form-control{{ $errors->has('unit') ? ' is-invalid' : '' }}" id="unit" name="unit" required>
+                                    <option value="">-- Select Unit --</option>
+                                    @foreach ($units as $unit)
+                                    <option value="{{$unit->slug}}">{{$unit->code}} - {{$unit->name}}</option>                                        
+                                    @endforeach
                                 </select>
-                                @if ($errors->has('department'))
+                                @if ($errors->has('unit'))
                                     <span class="text-danger">
-                                        <strong>{{ $errors->first('department') }}</strong>
+                                        <strong>{{ $errors->first('unit') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
+                        <div class="col-md-1"></div>
                         <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="programme" class="{{ $errors->has('programme') ? ' text-danger' : '' }}">Programme</label>
-                                <select class="form-control{{ $errors->has('programme') ? ' is-invalid' : '' }}" id="programme" name="programme" required>
-                                    <option value="">-- Study level where the pastpaper belongs --</option>
-                                    <option value="Phd">Phd</option>
-                                    <option value="Masters">Masters</option>
-                                    <option value="Degree">Degree</option>
-                                    <option value="Diploma">Diploma</option>
-                                    <option value="Certificate">Certificate</option>
-                                </select>
-                                @if ($errors->has('programme'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('programme') }}</strong>
-                                    </span>
-                                @endif
+                            <label for="from" class="{{ $errors->has('from') ? ' text-danger' : '' }}">Period</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input class="form-control" id="from" name="from" type="text" placeholder="From">
+                                    @if ($errors->has('from'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('from') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="col-md-4">                                    
+                                    <input class="form-control" id="to" name="to" type="text" placeholder="To">
+                                    @if ($errors->has('to'))
+                                        <span class="text-danger">
+                                            <strong>{{ $errors->first('to') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>   
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="unit_name" class="{{ $errors->has('question') ? ' text-danger' : '' }}">Unit Name</label>
-                                <input type="text" id="unit_name" name="unit_name" class="form-control{{ $errors->has('unit_name') ? ' is-invalid' : '' }}" autocomplete="new-text" placeholder="Unit Name" required>  
-                                @if ($errors->has('unit_name'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('unit_name') }}</strong>
-                                    </span>
-                                @endif          
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="unit_code" class="{{ $errors->has('question') ? ' text-danger' : '' }}">Unit Code</label>
-                                <input type="text" id="unit_code" name="unit_code" class="form-control{{ $errors->has('question') ? ' is-invalid' : '' }}" autocomplete="new-text" placeholder="Unit Code" required>    
-                                @if ($errors->has('unit_code'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('unit_code') }}</strong>
-                                    </span>
-                                @endif        
-                            </div>
-                        </div>
-                    </div>    
                     <div class="row">
                         <div class="col-md-5">
                             <div class="form-group">
@@ -117,6 +81,25 @@
                             </label>
                             </div>
                         </div>     
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="programme" class="{{ $errors->has('programme') ? ' text-danger' : '' }}">Programme</label>
+                                <select class="form-control{{ $errors->has('programme') ? ' is-invalid' : '' }}" id="programme" name="programme" required>
+                                    <option value="">-- Study level where the pastpaper belongs --</option>
+                                    <option value="Phd">Phd</option>
+                                    <option value="Masters">Masters</option>
+                                    <option value="Degree">Degree</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Certificate">Certificate</option>
+                                </select>
+                                @if ($errors->has('programme'))
+                                    <span class="text-danger">
+                                        <strong>{{ $errors->first('programme') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                     </div>     
                     <div class="row" style="display: none;" v-show="answer">
                         <div class="col-md-5">
@@ -142,13 +125,48 @@
 @endsection
 
 @section('scripts')
+<script type="text/javascript" src="{{ asset('js/plugins/select2.min.js') }}"></script>    
+<script type="text/javascript" src="{{ asset('js/plugins/bootstrap-datepicker.min.js') }}"></script>   
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css"></script>   
 <script>
+    $(document).ready(function() {
+        $('#unit').select2();
+     
+        var startDate = new Date();
+        var fechaFin = new Date();
+        var FromEndDate = new Date(); 
+        var ToEndDate = new Date();    
+        
+        $("#from").datepicker({
+            autoclose: true,
+            minViewMode: 1,
+            format: 'M yyyy',
+            orientation: 'bottom'
+        }).on('changeDate', function(selected){
+            startDate = new Date(selected.date.valueOf());
+            startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+            $('.to').datepicker('setStartDate', startDate);
+        }); 
+        
+        $('#to').datepicker({
+            autoclose: true,
+            minViewMode: 1,
+            format: 'M yyyy',
+            orientation: 'bottom'
+        }).on('changeDate', function(selected){
+            FromEndDate = new Date(selected.date.valueOf());
+            FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
+            $('.from').datepicker('setEndDate', FromEndDate);
+        });  
+            
+    });
+
     var app = new Vue({ 
-    el: '#app',
-    data: {
-        answer: false
-    }
-});
+        el: '#app',
+        data: {
+            answer: false
+        }
+    });
 </script>
     
 @endsection
