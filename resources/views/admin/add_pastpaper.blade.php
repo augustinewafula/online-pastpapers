@@ -75,11 +75,11 @@
                                 @endif
                                 <small class="form-text text-muted" id="questionHelp">Browse and choose the question pastpaper.</small>
                             </div>
-                            <div class="animated-checkbox">
+                            {{-- <div class="animated-checkbox">
                             <label>
                                 <input type="checkbox" v-model="answer" name="answer_checkbox"><span class="label-text">Answer to the pastpaper will be provided too</span>
                             </label>
-                            </div>
+                            </div> --}}
                         </div>     
                         <div class="col-md-1"></div>
                         <div class="col-md-5">
@@ -101,7 +101,7 @@
                             </div>
                         </div>
                     </div>     
-                    <div class="row" style="display: none;" v-show="answer">
+                    {{-- <div class="row" style="display: none;" v-show="answer">
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="exampleInputFile" class="{{ $errors->has('answer') ? ' text-danger' : '' }}">Answer file</label>
@@ -114,7 +114,7 @@
                                 <small class="form-text text-muted" id="questionHelp">Browse and choose the answer pastpaper.</small>
                             </div>  
                         </div>          
-                    </div>     
+                    </div>      --}}
                     <div class="tile-footer">
                     <button class="btn btn-primary" type="submit">Submit</button>                    
                 </form> 
