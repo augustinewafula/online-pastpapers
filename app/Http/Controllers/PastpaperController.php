@@ -78,6 +78,8 @@ class PastpaperController extends Controller
         if ($request->answer_checkbox) {
             $pastpaper->answer = $this->uploadFile($request->answer,'answer',$unit->name.'-'.$unit->code);
         }
+        $pastpaper->to = $request->to;
+        $pastpaper->from = $request->from;
         $pastpaper->save();
 
         $pastpaper_name = explode(".", $pastpaper->question, 2)[0];

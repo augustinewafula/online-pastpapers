@@ -17,5 +17,11 @@ class UnitsTableSeeder extends Seeder
             'name' => 'Network Essentials',
             'code' => 'DIT 0472'
         ]);
+
+        Unit::create([
+            'department_id' => 2,
+            'name' => 'Entrepreneurship Skills',
+            'code' => 'EOD 0356'
+        ]);
     }
 }

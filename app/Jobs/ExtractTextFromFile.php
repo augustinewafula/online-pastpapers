@@ -7,10 +7,10 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Log;
 use App\FileToText;
 use App\Question;
 use NumberFormatter;
+use Illuminate\Support\Facades\Log;
 
 class ExtractTextFromFile implements ShouldQueue
 {
@@ -89,7 +89,7 @@ class ExtractTextFromFile implements ShouldQueue
                         $single_question = trim($this->extractTextFromString($specific_number_questions,$character.')',2,'question '));
                     }  
                 }
-                $question_number.$character.': '.$single_question.'</br>';
+                // $question_number.$character.': '.$single_question.'</br>';
                 if ($single_question && strlen($single_question)>10) {   
                     if ($terminate_with == 'marks)') {
                         $marks = trim(substr(substr($single_question, stripos($single_question, '(') + 1), 0, 2));
@@ -100,13 +100,19 @@ class ExtractTextFromFile implements ShouldQueue
                     if (!$hasMutipleQuestions) {
                       $final_question = $single_question.' '.ucfirst($terminate_with);
                     }
-                    // inserting to db at this point
-                    $question = new Question();
-                    $question->pastpaper_id = $this->pastpaper_id;
-                    $question->question_number = $number;
-                    $question->question = $final_question;
-                    $question->marks = $marks;
-                    $question->save();
+
+                    // make sure the marks obtain is an integer
+                    if (is_numeric($marks)) {
+                        // inserting to db at this point
+                        $question = new Question();
+                        $question->pastpaper_id = $this->pastpaper_id;
+                        $question->question_number = $number;
+                        $question->question = $final_question;
+                        $question->marks = $marks;
+                        $question->save();
+                    }else{
+                        Log::info($this->pastpaper_name.': Number '.$number.' marks('.$marks.') is not a numeric value');
+                    }
                     // file_put_contents($this->path.$question_number.$character.'.txt', $final_question);
                 }
                

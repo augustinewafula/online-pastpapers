@@ -20,6 +20,8 @@ class CreatePastpapersTable extends Migration
             $table->string('programme');
             $table->string('question');
             $table->string('answer')->nullable();
+            $table->string('from');
+            $table->string('to');
             $table->timestamps();
         });
     }

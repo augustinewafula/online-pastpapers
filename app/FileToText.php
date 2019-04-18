@@ -16,8 +16,8 @@ class FileToText
  
     public function convertToText()
     {
-        if ($this->pastpaper_extension=='pdf') {
-            return $this->PdfToText($this->path.$this->pastpaper_name);
+        if ($this->pastpaper_extension=='.pdf') {
+            return $this->PdfToText($this->path.$this->pastpaper_name.$this->pastpaper_extension);
         } else {
             $convert_to_pdf =  $this->DocxToPdf();
             return $this->PdfToText($this->path.$convert_to_pdf);            
