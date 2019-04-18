@@ -21,7 +21,7 @@
           <a href="{{ route('home') }}" >
             <div class="widget-small danger coloured-icon"><i class="icon fa fa-university fa-3x"></i>
               <div class="info">
-                <h4>Properties</h4>
+                <h4>Total Pastpapers</h4>
                 <p><b>4</b></p>
               </div>
             </div>

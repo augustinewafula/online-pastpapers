@@ -32,6 +32,26 @@ class PastpaperController extends Controller
         return view('admin.add_pastpaper')->with('units',$units);
     }
 
+    public function search($keyword)
+    {
+        // check if user selected unit from dropdown, if so we can easily obtain unit code
+        if (strpos($keyword, '-')) {
+            $unti_code = trim(explode("-", $keyword, 2)[0]);
+        }else{
+            $unit = Unit::select('id','name','code')
+                        ->where('name', 'like', '%'.$keyword.'%')
+                        ->orWhere('code', 'like', '%'.$keyword.'%')
+                        ->first();
+            $unti_code = $unit->code;
+        }
+
+        $pastpapers = Pastpaper::select('units.code','units.name','pastpapers.question')
+                                ->join('units','units.id','pastpapers.unit_id')
+                                ->where('code',$unti_code)
+                                ->get();
+        return $pastpapers;
+    }
+
     /**
      * Store a newly created resource in storage.
      *

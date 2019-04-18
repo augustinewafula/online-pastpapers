@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Unit;
 use App\Department;
+use App\Pastpaper;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller
@@ -30,6 +31,16 @@ class UnitController extends Controller
         $departments = Department::all();
         return view('admin.add_unit')->with('departments',$departments);
     }
+
+    public function search($keyword)
+    {
+        $unit = Unit::select('id','name','code')
+                    ->where('name', 'like', '%'.$keyword.'%')
+                    ->orWhere('code', 'like', '%'.$keyword.'%')
+                    ->get();
+        return $unit;
+    }
+
 
     /**
      * Store a newly created resource in storage.

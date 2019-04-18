@@ -34,6 +34,8 @@ Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('ver
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('units/search/{keyword}', 'UnitController@search')->name('units.search');
+Route::get('pastpapers/search/{keyword}', 'PastpaperController@search')->name('units.search');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', function () {
