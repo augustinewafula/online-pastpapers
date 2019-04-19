@@ -34,6 +34,7 @@
                     <tr>
                         <th>Unit name</th>
                         <th>Unit code</th>
+                        <th>Semester Period</th>
                         <th>Programme</th>
                         <th>Action</th>
                     </tr>
@@ -43,17 +44,16 @@
                         <tr class="item">
                             <td>{{ $pastpaper->unit->name }}</td> 
                             <td>{{ $pastpaper->unit->code }}</td>
+                            <td>{{ date('M',strtotime($pastpaper->from)) }} to {{ $pastpaper->to }}</td>
                             <td>{{ $pastpaper->programme }}</td>
-                            <td></td>
-                            {{-- <td>
-                            <a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Compose a message to {{$group->name}} group" data-placement="left" href="{{ route('admin_compose_message',['to'=>$group->slug]) }}"><i class="fa fa-comment-o" style="font-size: 20px;"></i></a>
-                            <a href="{{ route('admin_edit_group', ['slug'=>$group->slug]) }}" data-toggle="tooltip" title="Edit" class="btn btn-sm btn-outline-primary"><i class="fa fa-pencil" style="font-size: 20px;"></i></a>
-                            <button onClick="deleteBtn({{$group->id}})" data-toggle="tooltip" title="Delete group" data-placement="right" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash" style="font-size: 20px;"></i></button>
-                            <form id="delete_form_{{$group->id}}" action="{{ route('admin_delete_group') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="id" value="{{Crypt::encrypt($group->id)}}">
-                            </form> 
-                            </td> --}}
+                            <td>
+                                <a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Edit" data-placement="left" href="{{ route('pastpapers.edit',['slug'=>$pastpaper->id]) }}"><i class="fa fa-pencil" style="font-size: 20px;"></i></a>
+                                <button onClick="deleteBtn('{{$pastpaper->id}}')" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash" style="font-size: 20px;"></i></button>
+                                <form id="delete_form_{{$pastpaper->id}}" action="{{ route('pastpapers.destroy',['slug'=>$pastpaper->id]) }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                    <input type="hidden" name="_method" value="DELETE">
+                                </form>
+                            </td>
                         </tr>                        
                         @endforeach                  
                     </tbody>
@@ -71,6 +71,28 @@
 <script type="text/javascript" src="{{ asset('js/plugins/buttons.bootstrap4.min.js') }}"></script>
 <script>
     $('#adminsTable').DataTable();
+</script>
+<script type="text/javascript" src="{{ asset('js/plugins/sweetalert.min.js') }}"></script>
+<script>
+    $('#adminsTable').DataTable();
+    function deleteBtn(id) {    
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this record",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel!",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function(isConfirm) {
+            if (isConfirm) {
+                form ="delete_form_"+id;
+                    document.getElementById(form).submit();
+            }   
+            
+        });
+    }
 </script>
 @if (session('status'))
     <script type="text/javascript" src="{{ asset('js/plugins/bootstrap-notify.min.js') }}"></script>

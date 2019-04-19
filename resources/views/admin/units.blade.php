@@ -88,17 +88,6 @@
             
         });
     }
-
-    function deletedUnit() {    
-        swal({
-                title: "Deleted",
-                text: "Unit deleted successfully",
-                type: "info",
-                showCancelButton: false,
-                confirmButtonText: "Ok",
-                closeOnCancel: true
-            });
-    }
 </script>
 @if (session('status'))
     <script type="text/javascript" src="{{ asset('js/plugins/bootstrap-notify.min.js') }}"></script>

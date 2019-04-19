@@ -1,4 +1,4 @@
-$table->bigIncrements('id');<?php
+<?php
 
 namespace App\Http\Controllers;
 

@@ -29,7 +29,7 @@ class ExtractTextFromFile implements ShouldQueue
         $this->pastpaper_name = $file_name;
         $this->pastpaper_extension = $file_extension;
         $this->pastpaper_id = $pastpaper_id;
-        $this->path = storage_path('app/storage/pastpapers/');
+        $this->path = storage_path('app/public/pastpapers/');
     }
 
     /**

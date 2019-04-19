@@ -18,8 +18,7 @@ class CreatePastpapersTable extends Migration
             $table->bigInteger('unit_id')->unsigned();
             $table->foreign('unit_id')->references('id')->on('units');
             $table->string('programme');
-            $table->string('question');
-            $table->string('answer')->nullable();
+            $table->string('name');
             $table->string('from');
             $table->string('to');
             $table->timestamps();

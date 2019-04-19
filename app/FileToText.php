@@ -11,7 +11,7 @@ class FileToText
     {
         $this->pastpaper_extension = '.'.$extension;
         $this->pastpaper_name = $name;
-        $this->path = storage_path('app/storage/pastpapers/');
+        $this->path = storage_path('app/public/pastpapers/');
     }
  
     public function convertToText()
@@ -60,6 +60,7 @@ class FileToText
         // clean up
         unset($word);
         
+        unlink($this->path.'new-'.$this->pastpaper_name.$this->pastpaper_extension);        
         return $pdf_file_name;
         
     }

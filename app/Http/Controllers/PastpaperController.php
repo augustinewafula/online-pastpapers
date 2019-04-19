@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pastpaper;
 use App\Unit;
+use App\Question;
 use Illuminate\Http\Request;
 use App\Jobs\ExtractTextFromFile;
 
@@ -45,7 +46,7 @@ class PastpaperController extends Controller
             $unti_code = $unit->code;
         }
 
-        $pastpapers = Pastpaper::select('units.code','units.name','pastpapers.question')
+        $pastpapers = Pastpaper::select('units.code','units.name','pastpapers.name')
                                 ->join('units','units.id','pastpapers.unit_id')
                                 ->where('code',$unti_code)
                                 ->get();
@@ -70,20 +71,21 @@ class PastpaperController extends Controller
         ]);
 
         $unit = Unit::where('slug',$request->unit)->first();
+        $pastpaper_period = Date('M',strtotime($request->from)).'-to-'.Date('M-Y',strtotime($request->to));
         
         $pastpaper = new Pastpaper();
         $pastpaper->programme = $request->programme;
         $pastpaper->unit_id = $unit->id;
-        $pastpaper->question = $this->uploadFile($request->question,'question',$unit->name.'-'.$unit->code);
-        if ($request->answer_checkbox) {
-            $pastpaper->answer = $this->uploadFile($request->answer,'answer',$unit->name.'-'.$unit->code);
-        }
+        $pastpaper->name = $this->uploadFile($request->question,$pastpaper_period,$unit->code.'-'.$unit->name);
+        // if ($request->answer_checkbox) {
+        //     $pastpaper->answer = $this->uploadFile($request->answer,'answer',$unit->name.'-'.$unit->code);
+        // }
         $pastpaper->to = $request->to;
         $pastpaper->from = $request->from;
         $pastpaper->save();
 
-        $pastpaper_name = explode(".", $pastpaper->question, 2)[0];
-        $pastpaper_extension = substr($pastpaper->question, strpos($pastpaper->question, ".") + 1);
+        $pastpaper_name = explode(".", $pastpaper->name, 2)[0];
+        $pastpaper_extension = substr($pastpaper->name, strpos($pastpaper->name, ".") + 1);
 
         ExtractTextFromFile::dispatch($pastpaper_name,$pastpaper_extension,$pastpaper->id)
                     ->delay(now()->addSeconds(1)); 
@@ -93,7 +95,7 @@ class PastpaperController extends Controller
 
     }
 
-    public function uploadFile($file,$type,$unit_name){
+    public function uploadFile($file,$period,$unit_name){
         // Handle file upload
         $filenameWithExt = $file->getClientOriginalName();
         //get just file name
@@ -101,9 +103,9 @@ class PastpaperController extends Controller
         //get just ext
         $extension = $file->getClientOriginalExtension();
         //file name to store
-        $fileNameToStore = str_replace(' ', '-', $unit_name).'-'.$type.'.'.$extension;
+        $fileNameToStore = str_replace(' ', '-', $unit_name).'-'.$period.'.'.$extension;
         //upload file
-        $path = $file->storeAs('storage/pastpapers',$fileNameToStore);
+        $path = $file->storeAs('public/pastpapers',$fileNameToStore);
         return $fileNameToStore;
 
     }
@@ -125,9 +127,17 @@ class PastpaperController extends Controller
      * @param  \App\Pastpaper  $pastpaper
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pastpaper $pastpaper)
+    public function edit($id)
     {
-        //
+        $units = Unit::all();
+        $pastpaper = Pastpaper::find($id);
+
+        $data = [
+            'units'=>$units,
+            'pastpaper'=>$pastpaper
+        ];
+        return view('admin.edit_pastpaper')->with($data);
+        
     }
 
     /**
@@ -137,9 +147,52 @@ class PastpaperController extends Controller
      * @param  \App\Pastpaper  $pastpaper
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pastpaper $pastpaper)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'programme'=>'required|string',
+            'unit'=>'required|string',
+            'from'=>'required|string',
+            'to'=>'required|string',
+            'question'=>'required_if:question_checkbox,on|mimes:pdf,docx|max:150000',
+            'answer'=>'required_if:answer_checkbox,on|mimes:pdf,docx|max:150000'
+        ]);
+
+        $unit = Unit::where('slug',$request->unit)->first();
+        $pastpaper_period = Date('M',strtotime($request->from)).'-to-'.Date('M-Y',strtotime($request->to));
+        
+        $pastpaper = Pastpaper::find($id);
+        
+        if ($request->question_checkbox) {
+            $previous_pastpaper_name = $pastpaper->name;
+            $previous_pastpaper_extension = substr($previous_pastpaper_name, strpos($previous_pastpaper_name, ".") + 1);
+            if ($previous_pastpaper_extension=="docx") {
+                // also delete pdf file
+                $previous_pastpaper_name_without_extension = explode(".", $previous_pastpaper_name, 2)[0];
+                unlink(public_path('storage/pastpapers/'.$previous_pastpaper_name_without_extension.'.pdf'));
+            }        
+            unlink(public_path('storage/pastpapers/'.$previous_pastpaper_name));
+
+            $pastpaper_name = explode(".", $pastpaper->name, 2)[0];
+            $pastpaper_extension = substr($pastpaper->name, strpos($pastpaper->name, ".") + 1);
+
+            ExtractTextFromFile::dispatch($pastpaper_name,$pastpaper_extension,$pastpaper->id)
+                        ->delay(now()->addSeconds(1)); 
+        }
+        $pastpaper->programme = $request->programme;
+        $pastpaper->unit_id = $unit->id;
+        if ($request->question_checkbox) {
+            $pastpaper->name = $this->uploadFile($request->question,$pastpaper_period,$unit->code.'-'.$unit->name);
+        }
+        // if ($request->answer_checkbox) {
+        //     $pastpaper->answer = $this->uploadFile($request->answer,'answer',$unit->name.'-'.$unit->code);
+        // }
+        $pastpaper->to = $request->to;
+        $pastpaper->from = $request->from;
+        $pastpaper->save();
+
+        $request->session()->flash('status', 'Pastpaper updated successfully');
+        return redirect($this->redirectPath);
     }
 
     /**
@@ -148,8 +201,24 @@ class PastpaperController extends Controller
      * @param  \App\Pastpaper  $pastpaper
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pastpaper $pastpaper)
+    public function destroy(Request $request, $id)
     {
-        //
+        Question::where('pastpaper_id',$id)->delete();
+        $pastpaper = Pastpaper::find($id);
+        $pastpaper_name = $pastpaper->name;
+        $pastpaper_extension = substr($pastpaper_name, strpos($pastpaper_name, ".") + 1);
+
+        if ($pastpaper_extension=="docx") {
+            // also delete pdf file
+            $pastpaper_name_without_extension = explode(".", $pastpaper_name, 2)[0];
+            unlink(public_path('storage/pastpapers/'.$pastpaper_name_without_extension.'.pdf'));
+        }        
+        echo 'Ext: '.$pastpaper_extension;
+        unlink(public_path('storage/pastpapers/'.$pastpaper_name));
+        $pastpaper->delete();
+
+        $request->session()->flash('status', 'Unit deleted successfully');
+        return redirect($this->redirectPath);
+
     }
 }
