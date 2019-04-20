@@ -158,11 +158,11 @@
                         </thead>
                         <tbody>
                         <tr v-for="pastpaper in pastpapers" :key="pastpaper.id">
-                            <td>@{{pastpaper.code}} - @{{pastpaper.name}}</td>
-                            <td>Jan to April 2019</td>
+                            <td>@{{pastpaper.code}} - @{{pastpaper.unit_name}}</td>
+                            <td>@{{pastpaper.from}} to @{{pastpaper.to}}</td>
                             <td>
-                                <a href="#" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
-                                <a :href="pastpaper.question | addFullPath(pastpaper_location)" data-toggle="tooltip" title="Download" class="btn btn-sm btn-outline-primary"><i class="fa fa-download" style="font-size: 15px;"></i></a>
+                                <a :href="pastpaper.pastpaper_name | addFullPath(pastpaper_location)" target="_blank" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
+                                <a :href="pastpaper.pastpaper_name | addFullPath(pastpaper_location)" download data-toggle="tooltip" title="Download" class="btn btn-sm btn-outline-primary"><i class="fa fa-download" style="font-size: 15px;"></i></a>
                             </td>
                         </tr>
                         </tbody>
@@ -223,6 +223,12 @@
         },
         filters:{
             addFullPath(name,path){
+                var name_only = name.substring(0,name.indexOf("."))
+                var extension = name.split('.')[1]
+
+                if (extension=='docx') {
+                    return path+'/'+name_only+'.pdf'
+                }
                 return path+'/'+name
             }
         },

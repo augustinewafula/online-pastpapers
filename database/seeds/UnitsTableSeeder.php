@@ -23,5 +23,11 @@ class UnitsTableSeeder extends Seeder
             'name' => 'Entrepreneurship Skills',
             'code' => 'EOD 0356'
         ]);
+
+        Unit::create([
+            'department_id' => 1,
+            'name' => 'Introduction to Programming and Algorithm',
+            'code' => 'DIT 0202'
+        ]);
     }
 }

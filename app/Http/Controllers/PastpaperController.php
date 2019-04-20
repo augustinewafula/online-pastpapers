@@ -46,7 +46,7 @@ class PastpaperController extends Controller
             $unti_code = $unit->code;
         }
 
-        $pastpapers = Pastpaper::select('units.code','units.name','pastpapers.name')
+        $pastpapers = Pastpaper::select('units.code','units.name as unit_name','pastpapers.name as pastpaper_name','pastpapers.from','pastpapers.to')
                                 ->join('units','units.id','pastpapers.unit_id')
                                 ->where('code',$unti_code)
                                 ->get();
