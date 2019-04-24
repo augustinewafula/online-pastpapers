@@ -36,6 +36,8 @@ Route::get('email/resend', 'Auth\VerificationController@resend')->name('verifica
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('units/search/{keyword}', 'UnitController@search')->name('units.search');
 Route::get('pastpapers/search/{keyword}', 'PastpaperController@search')->name('units.search');
+Route::get('sample-exam', 'SampleExamController@index')->name('sampleExam.index');
+Route::get('sample-exam/generate/{keyword}', 'SampleExamController@generate')->name('sampleExam.generate');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', function () {
