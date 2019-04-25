@@ -33,11 +33,14 @@ Route::get('email/verify', 'Auth\VerificationController@show')->name('verificati
 Route::get('email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
 Route::get('email/resend', 'Auth\VerificationController@resend')->name('verification.resend');
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('units/search/{keyword}', 'UnitController@search')->name('units.search');
-Route::get('pastpapers/search/{keyword}', 'PastpaperController@search')->name('units.search');
-Route::get('sample-exam', 'SampleExamController@index')->name('sampleExam.index');
-Route::get('sample-exam/generate/{keyword}', 'SampleExamController@generate')->name('sampleExam.generate');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('units/search/{keyword}', 'UnitController@search')->name('units.search');
+    Route::get('pastpapers/search/{keyword}', 'PastpaperController@search')->name('units.search');
+    Route::get('sample-exam', 'SampleExamController@index')->name('sampleExam.index');
+    Route::get('sample-exam/generate/{keyword}', 'SampleExamController@generate')->name('sampleExam.generate');
+    
+});
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/', function () {

@@ -1,10 +1,10 @@
 <!-- Sidebar menu-->
   <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
   <aside class="app-sidebar">
-    <div class="app-sidebar__user">
+    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{{ asset('img/avatar.png') }}" width="48" alt="User Image">
       <div>
-        <p class="app-sidebar__user-name">John Doe</p>
-        {{--<p class="app-sidebar__user-designation"></p>TODO:: show the user role here..--}}
+        <p class="app-sidebar__user-name">{{Auth()->user()->name}}</p>
+        <p class="app-sidebar__user-designation">{{Auth()->user()->email}}</p>
       </div>
     </div>
     <ul class="app-menu">

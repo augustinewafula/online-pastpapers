@@ -102,18 +102,6 @@
         </ul>
     </div>
     <div class="row">
-        <div class="col-md-6 col-lg-3 home-widget">
-          <a href="{{ route('home') }}" >
-            <div class="widget-small danger coloured-icon"><i class="icon fa fa-university fa-3x"></i>
-              <div class="info">
-                <h4>Total Pastpapers</h4>
-                <p><b>4</b></p>
-              </div>
-            </div>
-          </a>
-        </div>
-    </div>
-    <div class="row">
       <div class="col-md-12">
           <div class="tile">  
               <div class="col-md-8">
