@@ -156,6 +156,9 @@
                         </tbody>
                     </table>
                 </div>
+                <div v-show="!foundPastpapers" style="display: none">
+                    <h5>Sorry, no pastpapers found</h5>
+                </div>
               </div>
           </div>
       </div>
@@ -174,7 +177,7 @@
     });
     
     //Open Search    
-    $('.form-search').click(function (event) {
+    $('.form-search').keypress(function (event) {
         $(".instant-results").fadeIn('slow').css('height', 'auto');
         event.stopPropagation();
     });
@@ -192,6 +195,7 @@
             unit: '',
             units: '',
             pastpapers: '',
+            foundPastpapers: true,
             pastpaper_location: 'storage/pastpapers'
         },
         methods: {
@@ -202,8 +206,12 @@
             searchPastpapers(){
                 if (this.unit) {                    
                     axios.get('pastpapers/search/'+this.unit).then(({ data }) => {
-                        if (data) {
-                            this.pastpapers = data        
+                        if (!Array.isArray(data) || !data.length) {  
+                            this.foundPastpapers = false; 
+                            this.pastpapers = '' 
+                        }else{
+                            this.pastpapers = data 
+                            this.foundPastpapers = true; 
                         }
                     })
                 }
@@ -227,7 +235,7 @@
                     return
                 }
                 axios.get('units/search/'+val).then(({ data }) => {
-                    if (data) {
+                    if (Array.isArray(data) || data.length) {
                         this.units = data        
                     }
                 })

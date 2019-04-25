@@ -36,6 +36,9 @@ class SampleExamController extends Controller
             $question = $this->getQuestions($unti_code, $i, $total_marks);
             $all_questions[] = $question;
         }
+        if(empty($all_questions[1])){   
+            $all_questions = [];
+        }
         return $all_questions;
 
     }
