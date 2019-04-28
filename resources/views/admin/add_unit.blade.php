@@ -23,50 +23,48 @@
             <div class="tile">  
                 <form method="POST" autocomplete="off" action="{{ route('units.store') }}" enctype="multipart/form-data">
                     @csrf      
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="department" class="{{ $errors->has('department') ? ' text-danger' : '' }}">Department</label>
-                                <select class="form-control{{ $errors->has('department') ? ' is-invalid' : '' }}" id="department" name="department" required>
-                                    <option value="">-- Study level where the pastpaper belongs --</option>
-                                    @foreach ($departments as $single_department)
-                                        <option value="{{$single_department->slug}}">{{$single_department->name}}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('department'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('department') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label for="department" class="{{ $errors->has('department') ? ' text-danger' : '' }}">Department</label>
+                            <select class="form-control{{ $errors->has('department') ? ' is-invalid' : '' }}" id="department" name="department" required>
+                                <option value="">-- Study level where the pastpaper belongs --</option>
+                                @foreach ($departments as $single_department)
+                                <option value="{{$single_department->slug}}">{{$single_department->name}}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('department'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('department') }}</strong>
+                                </span>
+                            @endif
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="name" class="{{ $errors->has('name') ? ' text-danger' : '' }}">Unit Name</label>
-                                <input type="text" id="name" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" autocomplete="new-text" placeholder="Unit Name" required>  
-                                @if ($errors->has('name'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif          
-                            </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label for="name" class="{{ $errors->has('name') ? ' text-danger' : '' }}">Unit Name</label>
+                            <input type="text" id="name" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" autocomplete="new-text" placeholder="Unit Name" required>  
+                            @if ($errors->has('name'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                            @endif          
                         </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="code" class="{{ $errors->has('code') ? ' text-danger' : '' }}">Unit Code</label>
-                                <input type="text" name="code" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" autocomplete="new-text" placeholder="Unit Code" required>  
-                                @if ($errors->has('code'))
-                                    <span class="text-danger">
-                                        <strong>{{ $errors->first('code') }}</strong>
-                                    </span>
-                                @endif          
-                            </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="form-group">
+                            <label for="code" class="{{ $errors->has('code') ? ' text-danger' : '' }}">Unit Code</label>
+                            <input type="text" name="code" class="form-control{{ $errors->has('code') ? ' is-invalid' : '' }}" autocomplete="new-text" placeholder="Unit Code" required>  
+                            @if ($errors->has('code'))
+                                <span class="text-danger">
+                                    <strong>{{ $errors->first('code') }}</strong>
+                                </span>
+                            @endif          
                         </div>
-                    </div> 
+                    </div>
                     <div class="tile-footer">
-                    <button class="btn btn-primary" type="submit">Save</button>                    
+                        <div class="col-md-4">
+                            <button class="btn btn-primary" type="submit">Save</button>  
+                        </div>                  
                 </form> 
             </div>
         </div>
