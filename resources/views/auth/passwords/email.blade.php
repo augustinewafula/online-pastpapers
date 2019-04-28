@@ -24,14 +24,14 @@
             <i class="fa fa-lg fa-fw fa-lock"></i><br>
             Student
           </h3>
-          <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-            <label class="control-label">EmailL</label>
+          <div class="form-group">
+            <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">EmailL</label>
             <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
             @if ($errors->has('email'))
-                <span class="help-block">
+                <span class="text-danger">
                     <strong>{{ $errors->first('email') }}</strong>
                 </span>
-            @endif
+            @endif  
           </div>
           <div class="form-group btn-container">
             <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</button>

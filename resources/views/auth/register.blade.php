@@ -36,16 +36,14 @@
                     @endif
                 </div>
             </div>
-            <div class="col-md-6">
-                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                    <label class="control-label">Student Email</label>
-                    <input class="form-control" type="text" name="email" placeholder="Your student email address" value="{{ old('email') }}" required autofocus>
-                    @if ($errors->has('email'))
-                        <span class="help-block">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </span>
-                    @endif
-                </div>
+            <div class="form-group">
+                <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">Student Email</label>
+                <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
+                @if ($errors->has('email'))
+                    <span class="text-danger">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif  
             </div>
            </div>
            
