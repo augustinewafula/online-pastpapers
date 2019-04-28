@@ -6,19 +6,6 @@
 
 @section('styles')
 <style>
-  .site-header {
-    height:450px; /* Remove affer */
-    width:800px;/* Remove affer */
-    margin: 50px auto;
-  }
-  #MainMenu {
-      padding:0;
-  }
-  .navbar-brand {
-      padding-left:0;
-      padding-right:0;
-  }
-
   /*---------- Search ----------*/
   .result-bucket li {
       padding: 4px 10px;
@@ -141,62 +128,65 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div v-show='showSamplePastpaper' style="display: none" class="tile"> 
+            <div v-show='showSamplePastpaper' style="display: none" class="tile">
                 <div class="container">
-                        <a class="btn btn-sm btn-outline-primary float-right" data-toggle="tooltip" title="Print" href="#"><i class="fa fa-print" style="font-size: 20px;"></i></a>
-                        <a class="btn btn-sm btn-outline-primary float-right" data-toggle="tooltip" style="margin-right: 10px" title="Download" href="#"><i class="fa fa-download" style="font-size: 20px;"></i></a>
-                    <center>
-                        <img src="{{ asset('img/logo.png') }}" width="120" alt="logo">
-                        <h4>ONLINE PASTPAPERS</h4>
-                        {{-- <h4>EXAMINATION FOR THE DEGREE OF BACHELOR OF SCIENCE IN
-                                COMPUTER TECHNOLOGY</h4> --}}
-                        <h4>@{{unit}}</h4>
-                    </center>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4 style="padding-left: 110px">JANUARY 2019</h4>
+                        {{-- <button class="btn btn-sm btn-outline-primary float-right" data-toggle="tooltip" title="Print"><i class="fa fa-print" style="font-size: 20px;"></i></button> --}}
+                        <button class="btn btn-sm btn-outline-primary float-right" data-toggle="tooltip" style="margin-right: 10px" @click="downloadPdf()" title="Download"><i class="fa fa-download" style="font-size: 20px;"></i></button>
+                    <div id="pastpaper-content">
+                        <center>
+                            <img src="{{ asset('img/logo.png') }}" width="120" alt="logo">
+                            <h4>ONLINE PASTPAPERS</h4>
+                            {{-- <h4>EXAMINATION FOR THE DEGREE OF BACHELOR OF SCIENCE IN
+                                    COMPUTER TECHNOLOGY</h4> --}}
+                            <h4>@{{unit}}</h4>
+                        </center>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 style="padding-left: 110px">JANUARY 2019</h4>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 150px">                        
+                                    <h4>TIME: 2 HOURS</h4>
+                                </div>
                             </div>
-                            <div class="col-md-6" style="padding-left: 150px">                        
-                                <h4>TIME: 2 HOURS</h4>
-                            </div>
-                        </div>
-                    <center>
-                        <hr>
-                        <h4 style="padding-left: 30px">INSTRUCTIONS: ANSWER QUESTION ONE [COMPULSORY] AND ANY OTHER TWO QUESTIONS</h4>
-                        <hr>
-                    </center>
-                    <div style="padding-left: 110px">
-                        <h4>QUESTION ONE [30 MARKS]</h4>
-                        <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_one in sample_paper.question_one" :key="question_one.id">
-                            @{{question_one.question}}        
-                        </p>
-                        <br>
-
-                        <h4>QUESTION TWO [20 MARKS]</h4>
-                        <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_two in sample_paper.question_two" :key="question_two.id">
-                            @{{question_two.question}}        
-                        </p>
-                        <br>
-
-                        <h4>QUESTION THREE [20 MARKS]</h4>
-                        <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_three in sample_paper.question_three" :key="question_three.id">
-                            @{{question_three.question}}        
-                        </p>
-                        <br>
-
-                        <h4>QUESTION FOUR [20 MARKS]</h4>
-                        <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_four in sample_paper.question_four" :key="question_four.id">
-                            @{{question_four.question}}        
-                        </p>
-                    </div>                    
+                        <center>
+                            <hr>
+                            <h4 style="padding-left: 30px">INSTRUCTIONS: ANSWER QUESTION ONE [COMPULSORY] AND ANY OTHER TWO QUESTIONS</h4>
+                            <hr>
+                        </center>
+                        <div style="padding-left: 110px">
+                            <h4>QUESTION ONE [30 MARKS]</h4>
+                            <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_one in sample_paper.question_one" :key="question_one.id">
+                                @{{question_one.question}}        
+                            </p>
+                            <br>
+    
+                            <h4>QUESTION TWO [20 MARKS]</h4>
+                            <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_two in sample_paper.question_two" :key="question_two.id">
+                                @{{question_two.question}}        
+                            </p>
+                            <br>
+    
+                            <h4>QUESTION THREE [20 MARKS]</h4>
+                            <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_three in sample_paper.question_three" :key="question_three.id">
+                                @{{question_three.question}}        
+                            </p>
+                            <br>
+    
+                            <h4>QUESTION FOUR [20 MARKS]</h4>
+                            <p style="white-space: pre-line; padding-left: 20px; font-size: 18px;" v-for="question_four in sample_paper.question_four" :key="question_four.id">
+                                @{{question_four.question}}        
+                            </p>
+                        </div> 
+                    </div>                                       
                 </div>                
             </div>
         </div>
-      </div>
+    </div>
 </main>
 @endsection
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/sweetalert.min.js') }}"></script>
 <script>
   $(document).ready(function(){
     //Hover Menu in Header
@@ -261,6 +251,36 @@
                         }
                     })
                 }
+            },
+            downloadPdf(){
+                swal({
+                    title: "Initiating Download...",
+                    text: "Please wait",
+                    imageUrl: "img/progress.gif",
+                    showConfirmButton: false,
+                    allowOutsideClick: false
+                });
+                var info = {
+                    ['unit'] : this.unit,
+                    ['questions'] : this.sample_paper
+                }  
+
+                axios({
+                    method: 'post',
+                    url: 'sample-exam/download',
+                    data: info,
+                    responseType: 'blob'
+                }).then((response) => {
+                    const url = window.URL.createObjectURL(new Blob([response.data]));
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', this.unit+' - '+Math.floor(Math.random() * 10000)+'.pdf'); //or any other extension
+                    document.body.appendChild(link);
+                    console.log("link: "+url)
+                    link.click();
+                    swal.close();
+                });        
+
             }
         },
         filters:{
@@ -288,16 +308,5 @@
             }
         },
     });
-</script>
-@if (session('status'))
-    <script type="text/javascript">
-      $.notify({
-            title: "Success : ",
-            message: "{{ session('status') }}",
-            icon: 'fa fa-check' 
-          },{
-            type: "info"
-      });
-    </script>        
-@endif   
+</script>  
 @endsection

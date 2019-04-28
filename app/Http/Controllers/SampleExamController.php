@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Unit;
 use App\Question;
 use App\Pastpaper;
+use Storage;
 use DB;
+use PDF;
 use Illuminate\Http\Request;
 
 class SampleExamController extends Controller
@@ -12,6 +14,18 @@ class SampleExamController extends Controller
     public function index()
     {
         return view('sample_exam');
+    }
+
+    public function download(Request $request)
+    {
+        // return $request->questions['question_one'];
+        $data = ['unit' => $request->unit,'questions'=> $request->questions];
+
+        $pdf = PDF::loadView('sample_exam_template', $data);
+
+        $name = $request->unit.'-'.rand().'.pdf';
+
+        return $pdf->download($name);
     }
 
     public function generate($keyword){

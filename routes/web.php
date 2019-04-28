@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('pastpapers/search/{keyword}', 'PastpaperController@search')->name('units.search');
     Route::get('sample-exam', 'SampleExamController@index')->name('sampleExam.index');
     Route::get('sample-exam/generate/{keyword}', 'SampleExamController@generate')->name('sampleExam.generate');
+    Route::post('sample-exam/download', 'SampleExamController@download')->name('sampleExam.download');
     
 });
 
