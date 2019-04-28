@@ -111,7 +111,7 @@
                       <div id="search-form" class="search-form js-search-form">
                         <form class="form-search" role="search" method="get">
                             <div class="input-group">
-                                <input type="text" class="form-control" v-model="unit" placeholder="unit name or unit code" />
+                                <input type="text" class="form-control" :style="text_box_search_style" v-model="unit" placeholder="unit name or unit code" />
                                 <div class="input-group-append">
                                   <button @click="searchPastpapers()" class="btn btn-primary" type="button">
                                     <i class="fa fa-search"></i>
@@ -196,7 +196,8 @@
             units: '',
             pastpapers: '',
             foundPastpapers: true,
-            pastpaper_location: 'storage/pastpapers'
+            pastpaper_location: 'storage/pastpapers',
+            text_box_search_style:''
         },
         methods: {
             setText(unit_code,unit_name){
@@ -230,12 +231,15 @@
         },
         watch: {
             unit (val) {
+                this.text_box_search_style = 'background: #FFF url(img/LoaderIcon.gif) no-repeat right'
                 if (!val) {
+                    this.text_box_search_style = ''
                     this.units = []
                     return
                 }
                 axios.get('units/search/'+val).then(({ data }) => {
-                    if (Array.isArray(data) || data.length) {
+                    this.text_box_search_style = ''
+                    if (data) {
                         this.units = data        
                     }
                 })

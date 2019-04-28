@@ -97,7 +97,7 @@
                     <label for="unit" class="{{ $errors->has('unit') ? ' text-danger' : '' }}">Name of the unit to generate sample exam</label>
                     <form class="form-search" role="search" method="get">
                         <div id="search-form" class="search-form js-search-form">
-                            <input type="text" class="form-control" v-model="unit" placeholder="unit name or unit code" />
+                            <input type="text" class="form-control" :style="text_box_search_style" v-model="unit" placeholder="unit name or unit code" />
                             <div class="instant-results">
                                 <ul class="list-unstyled result-bucket">
                                     <li v-for="unit in units" :key="unit.id" class="result-entry" data-suggestion="Target 1" :data-position="unit.id" data-type="type" data-analytics-type="merchant">
@@ -222,7 +222,8 @@
             },
             foundPastpapers: true,
             showSamplePastpaper: false,
-            pastpaper_location: 'storage/pastpapers'
+            pastpaper_location: 'storage/pastpapers',
+            text_box_search_style:''
         },
         methods: {
             setText(unit_code,unit_name){
@@ -296,11 +297,14 @@
         },
         watch: {
             unit (val) {
+                this.text_box_search_style = 'background: #FFF url(img/LoaderIcon.gif) no-repeat right'
                 if (!val) {
+                    this.text_box_search_style = ''
                     this.units = []
                     return
                 }
                 axios.get('units/search/'+val).then(({ data }) => {
+                    this.text_box_search_style = ''
                     if (data) {
                         this.units = data        
                     }
