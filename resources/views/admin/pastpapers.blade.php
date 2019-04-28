@@ -15,7 +15,7 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-clipboard"></i> Pastpapers</h1>
+            <h1><i class="fa fa-book"></i> Pastpapers</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
