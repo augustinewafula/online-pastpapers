@@ -25,7 +25,7 @@
               Student
           </h3>
           <div class="form-group">
-            <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">Email</label>
+            <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">Student Email</label>
             <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
             @if ($errors->has('email'))
                 <span class="text-danger">
