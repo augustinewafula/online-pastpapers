@@ -26,7 +26,8 @@
           </h3>
           <div class="form-group">
             <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">Student Email</label>
-            <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
+            <input v-model="student_email" @click="validate()" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
+            <span v-show="errors_field" style="display: none" class="text-danger"><strong>@{{ student_email_validation_message }}</strong></span>
             @if ($errors->has('email'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('email') }}</strong>
@@ -35,7 +36,8 @@
           </div>
           <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
             <label class="control-label">Password</label>
-            <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" name="password" placeholder="Input password" required>
+            <input v-validate @click="validate()" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password" name="password" placeholder="Input password" required>
+            <span v-show="errors_field" style="display: none" class="text-danger"><strong>@{{ errors.first('password') }}</strong></span>
             @if ($errors->has('password'))
                 <span class="help-block">
                     <strong>{{ $errors->first('password') }}</strong>
@@ -66,5 +68,40 @@
 @endsection
 
 @section('scripts')
-   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.4/vee-validate.min.js"></script>
+<script>
+  Vue.use(VeeValidate)
+  var app = new Vue({ 
+      el: '#app',
+      data: {
+        errors_field: false,
+        student_email: ''
+      },
+      methods: {
+        validate(){
+          this.errors_field = true
+        }
+      },
+      computed: {
+        // a computed getter
+        student_email_validation_message: function () {
+          var re = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*\@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+          if(this.student_email){
+            if (re.test(this.student_email)) {
+              allowed = ['students.','.edu'];
+              if(this.student_email.includes(allowed[0] || allowed[1])){
+                return ''
+              }else{
+                return 'Not a valid student e-mail address'
+              }
+            } else {
+                return 'Not a valid e-mail address.';
+            }
+          }else{
+            return 'Student email is required.';
+          }
+        }
+      }
+  });
+</script>
 @endsection

@@ -26,7 +26,8 @@
           </h3>
           <div class="form-group">
             <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">Email</label>
-            <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
+            <input v-validate class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" type="email" value="{{ old('email') }}" placeholder="Input your email address" required>
+            <span v-show="errors_field" style="display: none" class="text-danger"><strong>@{{ errors.first('email') }}</strong></span>
             @if ($errors->has('email'))
                 <span class="text-danger">
                     <strong>{{ $errors->first('email') }}</strong>
@@ -44,6 +45,15 @@
     </section>
 @endsection
 
-<script type="text/javascript">
-    $('.login-box').toggleClass('flipped');   
+@section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/2.2.4/vee-validate.min.js"></script>
+<script>
+  Vue.use(VeeValidate)
+  var app = new Vue({ 
+        el: '#app',
+        data: {
+          errors_field: true
+        }
+  });
 </script>
+@endsection
