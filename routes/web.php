@@ -69,5 +69,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('pastpapers', 'PastpaperController');
         Route::resource('departments', 'DepartmentController');
         Route::resource('units', 'UnitController');
+        Route::get('admins', 'AdminsController@index')->name('admins.index');
+        Route::get('admins/create', 'AdminsController@create')->name('admins.create');
+        Route::post('admins/store', 'AdminsController@store')->name('admins.store');
+        Route::delete('admins/{id}', 'AdminsController@destroy')->name('admins.destroy');
     });
 });

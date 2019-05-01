@@ -15,7 +15,8 @@
         "hesto/multi-auth": "^2.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "smalot/pdfparser": "*"
+        "smalot/pdfparser": "*",
+        "snowfire/beautymail": "dev-master"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
