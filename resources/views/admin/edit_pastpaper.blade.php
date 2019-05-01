@@ -65,7 +65,7 @@
                     <div class="col-md-7">
                         <div class="form-group">
                             <label for="question" class="{{ $errors->has('question') ? ' text-danger' : '' }}">Question file</label><br>
-                            <a href="{{ asset('storage/pastpapers/'.$pastpaper->name) }}" target="_blank" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 15px;"></i></a><br>
+                            <a href="{{ asset('storage/pastpapers/'.explode(".", $pastpaper->name, 2)[0]).'.pdf' }}" target="_blank" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 15px;"></i></a><br>
                             <div class="animated-checkbox">
                                 <label>
                                     <input type="checkbox" v-model="question" name="question_checkbox"><span class="label-text">Update question file</span>

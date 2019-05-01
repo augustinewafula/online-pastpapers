@@ -47,8 +47,9 @@
                             <td>{{ date('M',strtotime($pastpaper->from)) }} to {{ $pastpaper->to }}</td>
                             <td>{{ $pastpaper->programme }}</td>
                             <td>
-                                <a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Edit" data-placement="left" href="{{ route('pastpapers.edit',['slug'=>$pastpaper->id]) }}"><i class="fa fa-pencil" style="font-size: 20px;"></i></a>
-                                <button onClick="deleteBtn('{{$pastpaper->id}}')" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash" style="font-size: 20px;"></i></button>
+                                <a href="{{ asset('storage/pastpapers/'.explode(".", $pastpaper->name, 2)[0]).'.pdf' }}" target="_blank" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 20px;"></i></a>
+                                <a class="btn btn-sm btn-outline-primary" data-toggle="tooltip" title="Edit" href="{{ route('pastpapers.edit',['slug'=>$pastpaper->id]) }}"><i class="fa fa-pencil" style="font-size: 20px;"></i></a>
+                                <button onClick="deleteBtn('{{$pastpaper->id}}')" data-toggle="tooltip" title="Delete" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash" style="font-size: 20px;"></i></button>
                                 <form id="delete_form_{{$pastpaper->id}}" action="{{ route('pastpapers.destroy',['slug'=>$pastpaper->id]) }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
@@ -73,27 +74,6 @@
     $('#adminsTable').DataTable();
 </script>
 <script type="text/javascript" src="{{ asset('js/plugins/sweetalert.min.js') }}"></script>
-<script>
-    $('#adminsTable').DataTable();
-    function deleteBtn(id) {    
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this record",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel!",
-            closeOnConfirm: false,
-            closeOnCancel: true
-        }, function(isConfirm) {
-            if (isConfirm) {
-                form ="delete_form_"+id;
-                    document.getElementById(form).submit();
-            }   
-            
-        });
-    }
-</script>
 @if (session('status'))
     <script type="text/javascript" src="{{ asset('js/plugins/bootstrap-notify.min.js') }}"></script>
     <script type="text/javascript">
