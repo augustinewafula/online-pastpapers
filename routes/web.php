@@ -40,6 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('sample-exam', 'SampleExamController@index')->name('sampleExam.index');
     Route::get('sample-exam/generate/{keyword}', 'SampleExamController@generate')->name('sampleExam.generate');
     Route::post('sample-exam/download', 'SampleExamController@download')->name('sampleExam.download');
+    Route::get('profile', 'ProfileController@showProfilePage')->name('profile');
+    Route::post('name', 'ProfileController@updateName')->name('update_name');
+    Route::post('email', 'ProfileController@updateEmail')->name('update_email');
+    Route::post('password', 'ProfileController@updatePassword')->name('update_password');
     
 });
 
@@ -58,6 +62,10 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::group(['middleware' => ['admin']], function () {
         Route::get('home', 'HomeController@admin_index')->name('admin.home');
+        Route::get('profile', 'ProfileController@showAdminProfilePage')->name('admin.profile');
+        Route::post('name', 'ProfileController@adminUpdateName')->name('admin.update_name');
+        Route::post('email', 'ProfileController@adminUpdateEmail')->name('admin.update_email');
+        Route::post('password', 'ProfileController@adminUpdatePassword')->name('admin.update_password');
         Route::resource('pastpapers', 'PastpaperController');
         Route::resource('departments', 'DepartmentController');
         Route::resource('units', 'UnitController');

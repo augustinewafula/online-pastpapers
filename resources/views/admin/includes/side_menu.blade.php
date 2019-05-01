@@ -1,12 +1,15 @@
 <!-- Sidebar menu-->
   <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
   <aside class="app-sidebar">
-    <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{{ asset('img/avatar.png') }}" width="48" alt="User Image">
-      <div>
-        <p class="app-sidebar__user-name">{{Auth('admin')->user()->name}}</p>
-        <p class="app-sidebar__user-designation">{{Auth('admin')->user()->email}}</p>
-      </div>
-    </div>
+    <a href="{{ route('admin.profile') }}" style="text-decoration: none">
+        <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="{{ asset('img/avatar.png') }}" width="48" alt="User Image">
+          <div style="overflow: hidden; text-overflow: ellipsis; ">
+            <p class="app-sidebar__user-name">{{Auth('admin')->user()->name}}</p>
+            <p class="app-sidebar__user-designation">{{Auth('admin')->user()->email}}</p>
+          </div>
+        </div>
+    </a>
+    
     <ul class="app-menu">
       @auth('admin')
       <li><a class="app-menu__item {{ Route::currentRouteNamed('admin.home') ? 'active' : '' }}" href="{{ route('admin.home') }}"><i class="app-menu__icon fa fa-home"></i><span class="app-menu__label">Home</span></a></li>
