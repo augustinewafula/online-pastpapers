@@ -24,7 +24,7 @@
             <input type="hidden" name="token" value="{{ $token }}">
             <h3 class="login-head">
                 <i class="fa fa-lg fa-fw fa-user"></i><br>
-                Student
+                Admin
             </h3>
             <div class="form-group">
                 <label class="control-label {{ $errors->has('question') ? ' text-danger' : '' }}">Email</label>

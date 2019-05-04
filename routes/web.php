@@ -59,6 +59,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('admin_password.reset');
     Route::get('/password/reset', 'AdminAuth\ForgotPasswordController@showLinkRequestForm')->name('admin_password.request');
     Route::get('/password/reset/{token}', 'AdminAuth\ResetPasswordController@showResetForm');
+    Route::post('/password/reset', 'AdminAuth\ResetPasswordController@reset')->name('admin_password.update');
 
     Route::group(['middleware' => ['admin']], function () {
         Route::get('home', 'HomeController@admin_index')->name('admin.home');

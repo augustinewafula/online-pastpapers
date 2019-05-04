@@ -31,7 +31,9 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Admin type</th>
-                        <th>Action</th>
+                        @if (Auth('admin')->user()->type==2)
+                        <th>Action</th>                            
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -48,15 +50,17 @@
                                 Super
                             @endif
                             </td> 
+                            @if (Auth('admin')->user()->type==2)
                             <td>
-                                @if ($admin->type==1)
+                                @if (Auth('admin')->user()->id!=$admin->id)
                                 <button onClick="deleteBtn('{{$admin->id}}')" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash" style="font-size: 20px;"></i></button>
                                 <form id="delete_form_{{$admin->id}}" action="{{ route('admins.destroy',['id'=>$admin->id]) }}" method="POST" style="display: none;">
                                     {{ csrf_field() }}
                                     <input type="hidden" name="_method" value="DELETE">
-                                </form>
-                                @endif                                
-                            </td>
+                                </form>       
+                                @endif                                                            
+                            </td>                            
+                            @endif
                         </tr>                        
                         @endforeach                  
                     </tbody>
@@ -96,6 +100,7 @@
     }
 </script>
 @if (session('status'))
+    <script type="text/javascript" src="{{ asset('js/plugins/bootstrap-notify.min.js') }}"></script>
     <script type="text/javascript">
       $.notify({
             title: "Success : ",

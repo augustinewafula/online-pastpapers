@@ -11,7 +11,7 @@ class AdminsController extends Controller
     protected $redirectPath = 'admin/admins';
 
     public function index(){
-        $admins = Admin::select('name','email','type')->get();
+        $admins = Admin::select('id','name','email','type')->get();
         return view('admin.admins')->with('admins',$admins);
     }
 
@@ -29,9 +29,9 @@ class AdminsController extends Controller
         Admin::create([
             'name' => $request['name'],
             'email' => $request['email'],
-            'password' => bcrypt($password),
+            'password' => bcrypt($password)
         ]);
-        $admin_first_name = explode(".", $request['name'], 2)[0];
+        $admin_first_name = explode(" ", $request['name'], 2)[0];
         $admin_email = $request['email'];
         $admin_password = $password;
 
@@ -50,7 +50,9 @@ class AdminsController extends Controller
         return redirect($this->redirectPath);
     }
 
-    public function destroy($id){
-        
+    public function destroy(Request $request, $id){
+        Admin::find($id)->delete();
+        $request->session()->flash('status', 'Admin deleted successfully');
+        return redirect($this->redirectPath);        
     }
 }
