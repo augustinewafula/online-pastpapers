@@ -18,11 +18,41 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-lg-3 home-widget">
-          <a href="{{ route('home') }}" >
-            <div class="widget-small danger coloured-icon"><i class="icon fa fa-university fa-3x"></i>
+          <a href="{{ route('pastpapers.index') }}" >
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-book fa-3x"></i>
               <div class="info">
                 <h4>Total Pastpapers</h4>
-                <p><b>4</b></p>
+                <p><b>{{$pastpapersCount}}</b></p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3 home-widget">
+          <a href="{{ route('units.index') }}" >
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-clone fa-3x"></i>
+              <div class="info">
+                <h4>Total Units</h4>
+                <p><b>{{$unitsCount}}</b></p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3 home-widget">
+          <a href="{{ route('departments.index') }}" >
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-clipboard fa-3x"></i>
+              <div class="info">
+                <h4>Total Departments</h4>
+                <p><b>{{$departmentsCount}}</b></p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 col-lg-3 home-widget">
+          <a href="{{ route('admins.index') }}" >
+            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+              <div class="info">
+                <h4>Total Admins</h4>
+                <p><b>{{$adminsCount}}</b></p>
               </div>
             </div>
           </a>
