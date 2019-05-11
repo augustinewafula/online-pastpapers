@@ -134,32 +134,36 @@
                         </div>
                     </div>     
                   </div><br>
+                </div>
                 <div v-show="pastpapers" style="display: none" class="search-results">
-                <h5>Pastpapers Found </h5>
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>Unit</th>
-                            <th>Period</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="pastpaper in pastpapers" :key="pastpaper.id">
-                            <td>@{{pastpaper.code}} - @{{pastpaper.unit_name}}</td>
-                            <td>@{{pastpaper.from}} to @{{pastpaper.to}}</td>
-                            <td>
-                                <a :href="pastpaper.pastpaper_name | addFullPath(pastpaper_location)" target="_blank" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
-                                <a :href="pastpaper.pastpaper_name | addFullPath(pastpaper_location)" download data-toggle="tooltip" title="Download" class="btn btn-sm btn-outline-primary"><i class="fa fa-download" style="font-size: 15px;"></i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-md-12">
+                        <h5>Pastpapers Found </h5>
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Unit</th>
+                                    <th>Period</th>
+                                    <th>Programme</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="pastpaper in pastpapers" :key="pastpaper.id">
+                                    <td>@{{pastpaper.code}} - @{{pastpaper.unit_name}}</td>
+                                    <td>@{{pastpaper.from}} to @{{pastpaper.to}}</td>
+                                    <td>@{{pastpaper.programme}}</td>
+                                    <td>
+                                        <a :href="pastpaper.pastpaper_name | addFullPath(pastpaper_location)" target="_blank" data-toggle="tooltip" title="View" class="btn btn-sm btn-outline-primary"><i class="fa fa-eye" style="font-size: 15px;"></i></a>
+                                        <a :href="pastpaper.pastpaper_name | addFullPath(pastpaper_location)" download data-toggle="tooltip" title="Download" class="btn btn-sm btn-outline-primary"><i class="fa fa-download" style="font-size: 15px;"></i></a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                    </div>
+                    <div v-show="!foundPastpapers" style="display: none">
+                        <h5>Sorry, no pastpapers found</h5>
+                    </div>
                 </div>
-                <div v-show="!foundPastpapers" style="display: none">
-                    <h5>Sorry, no pastpapers found</h5>
-                </div>
-              </div>
           </div>
       </div>
     </div>
