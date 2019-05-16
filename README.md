@@ -9,7 +9,7 @@ Online past papers is system enable students view and download pastpapers. It ca
 * Save as the `.env.example` to `.env` and set your database information 
 * Run ` php artisan key:generate` to generate the app key
 * Run ` npm install ` 
-* Run ` php artisan migrate ` 
+* Run ` php artisan migrate:fresh --seed ` 
 * Done !!!
 
 ## Note
