@@ -142,7 +142,7 @@
                         </center>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h4 style="padding-left: 110px">JANUARY 2019</h4>
+                                    <h4 style="padding-left: 110px">May 2019</h4>
                                 </div>
                                 <div class="col-md-6" style="padding-left: 150px">                        
                                     <h4>TIME: 2 HOURS</h4>

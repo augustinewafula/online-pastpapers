@@ -1,5 +1,5 @@
 <!-- Navbar-->
-  <header class="app-header"><a class="app-header__logo" href="{{ route('home') }}">Online Pastpaepers</a>
+  <header class="app-header"><a class="app-header__logo" href="{{ route('home') }}">Online Pastpapers</a>
     <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">

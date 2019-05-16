@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fecc766e65b7a9eb94e8acdffb07378",
+    "content-hash": "907102f8362b2cfaecde2df807f8f29e",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -3589,6 +3589,52 @@
                 "test"
             ],
             "time": "2016-01-20T08:20:44+00:00"
+        },
+        {
+            "name": "jason-guru/laravel-make-repository",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jason-guru/laravel-make-repository.git",
+                "reference": "7de0efb85f78d7b452bfed114b2c9f5c9ea0bcd3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jason-guru/laravel-make-repository/zipball/7de0efb85f78d7b452bfed114b2c9f5c9ea0bcd3",
+                "reference": "7de0efb85f78d7b452bfed114b2c9f5c9ea0bcd3",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.0",
+                "illuminate/database": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "JasonGuru\\LaravelMakeRepository\\RepositoryServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "JasonGuru\\LaravelMakeRepository\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "G Jason Sharma",
+                    "email": "g.jason.sharma@gmail.com"
+                }
+            ],
+            "description": "A simple package to create a make:repository command for Laravel 5+",
+            "time": "2018-10-30T14:53:59+00:00"
         },
         {
             "name": "mockery/mockery",
