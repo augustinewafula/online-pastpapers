@@ -12,4 +12,5 @@ Online past papers is system enable students view and download pastpapers. It ca
 * Run ` php artisan migrate ` 
 * Done !!!
 
-Make sure to add ` php artisan schedule:run ` to cron job to run jobs
+## Note
+To process queues, make sure to add ` php artisan schedule:run ` to cron jobs or run the ` automate.sh ` file incase of windows server
